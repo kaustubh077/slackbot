@@ -16,7 +16,7 @@ bot.on('start', () => {
 
     bot.postMessageToChannel(
         'test',
-        'Test message h, aajaye to badhiya',
+        'Test message onstartup',
         params
     );
 })
@@ -31,13 +31,13 @@ bot.on('message', (data) => {
         return;
     }
     if(data.files){
-        console.log("data files detected----------------------------------------------------------------------------------",data.user)
+        console.log("data files detected----------",data.user)
         data.files.forEach(file => {
             if(file.filetype == "png"){
-                console.log("png files detected----------------------------------------------------------------------------------")
-                console.log("conversion started----------------------------------------------------------------------------------")
+                console.log("png files detected---------------------------")
+                console.log("conversion started-------------------------")
                 sharp(file.url_private).webp().toBuffer().then(img => {
-                    console.log("conversion finished----------------------------------------------------------------------------------");
+                    console.log("conversion finished---------------------");
                     bot.postMessageToChannel(
                     'test',
                     `:zap: this works`,
@@ -50,12 +50,7 @@ bot.on('message', (data) => {
     }
     handleMessage(data.text);
 })
-
-// async function convert(){
-//     const outputWebp = sharp(imgurl).webp().toBuffer();
-//     return outputWebp;
-// }
-
+//  test code
 function handleMessage(message) {
     if(message.includes(' inspire me')) {
         // inspireMe()
@@ -64,10 +59,8 @@ function handleMessage(message) {
             `:zap: this works`,
         );
     } else if(message.includes(' random joke')) {
-        // randomJoke()
         console.log("joked")
     } else if(message.includes(' help')) {
-        // runHelp()
         console.log("helped")
     }
 }
