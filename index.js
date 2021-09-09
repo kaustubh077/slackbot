@@ -4,10 +4,9 @@ var express = require('express')
 var request = require('request')
 var bodyParser = require('body-parser')
 var app = express()
-// var deeplink = require('node-deeplink');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const dotenv = require("dotenv");
-// const sharp = require('sharp');
+const processImage = require("./convToURL");
 dotenv.config()
 var app = express();
 
@@ -53,26 +52,21 @@ bot.on('message', (data) => {
 		console.log("data files detected-",data.user)
 		data.files.forEach(file => {
 			if(file.filetype == "png"){
-				const imgurl = file.url_private_download;
-				console.log("png files detected-",imgurl)
-				// the returning message, ideally contains the converted image
-				var message = {
-					"blocks":[
-						{
-							"type": "image",
-							"title": {
-								"type": "plain_text",
-								"text": "webpImage",
-								"emoji": true
-							},
-							// "image_url": "https://freepngimg.com/thumb/light/7-2-light-png-clipart.png",
-							"image_url": imgurl,// this is currently not working, if we use the above link instead of this, everything works
-							// use sharp module for conversion once the image is successfully obtained.
-							"alt_text": "image1"
+				const imgurl = file.url_private;
+				processImage(imgurl).then(urlf => {
+					var message = {
+						"blocks":[
+							{
+							"type": "section",
+							"text": {
+								"type": "mrkdwn",
+								"text": `WebP URL for the image => ${urlf}`,
+							}
 						},
-					]
-				}
-				sendMessageToSlackResponseURL(process.env.RESPONSE_URL,message);
+						]
+					}
+					sendMessageToSlackResponseURL(process.env.RESPONSE_URL,message);
+				});				
 			}
 		})
 	}
