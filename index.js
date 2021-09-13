@@ -54,7 +54,8 @@ bot.on('message', (data) => {
 		data.files.forEach(file => {
 			if(file.filetype == "png"){
 				const imgurl = file.url_private;
-				processImage(imgurl).then(urlf => {
+				const filename = file.name;
+				processImage(imgurl, filename).then(urlf => {
 					var message = {
 						"blocks":[
 							{
