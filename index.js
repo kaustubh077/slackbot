@@ -6,7 +6,8 @@ var bodyParser = require('body-parser')
 var app = express()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const dotenv = require("dotenv");
-const processImage = require("./convToURL");
+const processImage = require("./convToS3URL");
+// const processImage = require("./convToimgbbURL");
 dotenv.config()
 var app = express();
 
